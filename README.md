@@ -1,4 +1,4 @@
-# Guide to Using the AdMob Request Verification Code
+# Guide to Using the Python AdMob Server Side Verifying (SSV)
 
 Based on the params sent by Google Admob, we will get the values ​​of **data_to_verify**, **signature** and **key_id**.
 ```python
