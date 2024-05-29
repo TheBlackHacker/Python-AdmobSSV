@@ -38,11 +38,20 @@ def verify_admob_request(data_to_verify, key_id, signature):
         This function uses the ECDSA algorithm for verification.
 
     """
+    # Tải khóa công khai
     public_key = get_public_key().get(key_id, None)
 
-    content = data_to_verify.encode('utf-8')
+    # Tạo chuỗi dữ liệu cần xác minh
+    data_to_verify = urllib.parse.unquote(data_to_verify).encode("utf-8").split(b"&")
 
-    signature = base64.b64decode(signature+"===")
+    encoded_signature_param = "signature".encode()
+    encoded_key_id_param = "key_id".encode()
+
+    fixed_content = [c for c in data_to_verify if not c.startswith((encoded_signature_param, encoded_key_id_param))]
+    content = b"&".join(fixed_content)
+
+    # Giải mã chữ ký từ Base64
+    signature = base64.urlsafe_b64decode(signature+"===")
 
     from ecdsa import BadSignatureError, VerifyingKey
     from ecdsa.util import sigdecode_der
