@@ -39,7 +39,6 @@ def verify_admob_request(data_to_verify, key_id, signature):
 
     """
     public_key = get_public_key().get(key_id, None)
-    print(public_key)
 
     content = data_to_verify.encode('utf-8')
 
